@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html manifest1="chemViewer.manifest1">
+<head>
+	<meta charset="UTF-8">
+	<title>Chem Viewer 3D Demo</title>
+
+	<script src="../../libs/Three.js"></script>
+	<!--
+	<script src="../../libs/raphael-min.2.0.1.js"></script>
+	-->
+
+	<script src="../../libs/kekule/kekule.js?modules=chemWidget,openbabel"></script>
+
+	<link rel="stylesheet" type="text/css" href="../../libs/kekule/themes/default/kekule.css" />
+	<!--
+	<script src="../../../src/kekule.js?modules=chemWidget,algorithm&min=false"></script>
+  -->
+
+	<style>
+		html, body
+		{
+			margin: 0;
+			padding: 0;
+			position: relative;
+			overflow: hidden;
+		}
+		#chemViewer
+		{
+			border: none;
+			margin: 0;
+		}
+		#header
+		{
+			padding: 0.2em 1em;
+			overflow: hidden;
+			vertical-align: middle;
+		}
+		#header button, #header span
+		{
+			display: inline-block;
+		}
+	</style>
+
+	<script name="mol1" id="mol1" type="chemical/x-mdl-molfile">
+unnamed
+ OpenBabel10111815123D
+
+ 34 36  0  0  0  0  0  0  0  0999 V2000
+    4.4745    0.8287   -0.8963 N   0  0  0  0  0  0  0  0  0  0  0  0
+    4.5889    1.4340    0.4160 C   0  0  2  0  0  0  0  0  0  0  0  0
+    3.4804    2.4542    0.7042 C   0  0  2  0  0  0  0  0  0  0  0  0
+    2.1916    1.7395    0.3603 C   0  3  0  0  0  0  0  0  0  0  0  0
+    2.1462    0.8228   -0.5528 N   0  0  0  0  0  0  0  0  0  0  0  0
+    3.2732    0.5472   -1.2670 C   0  0  0  0  0  0  0  0  0  0  0  0
+    1.0452    2.0978    1.0167 N   0  0  0  0  0  0  0  0  0  0  0  0
+    5.9133    2.1450    0.5264 N   0  3  2  0  0  0  0  0  0  0  0  0
+    5.9705    3.2740   -0.4754 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.6694    4.0406   -0.5969 C   0  0  0  0  0  0  0  0  0  0  0  0
+    3.5313    3.7009   -0.0896 N   0  0  0  0  0  0  0  0  0  0  0  0
+    7.0777    1.1966    0.4314 C   0  0  0  0  0  0  0  0  0  0  0  0
+    8.4056    1.8444    0.7004 C   0  0  0  0  0  0  0  0  0  0  0  0
+    8.6265    2.5066    1.9120 C   0  0  0  0  0  0  0  0  0  0  0  0
+    7.6212    2.5877    2.7968 F   0  0  0  0  0  0  0  0  0  0  0  0
+    9.4472    1.7923   -0.2348 C   0  0  0  0  0  0  0  0  0  0  0  0
+   10.6718    2.4041    0.0452 C   0  0  0  0  0  0  0  0  0  0  0  0
+   10.8687    3.0648    1.2589 C   0  0  0  0  0  0  0  0  0  0  0  0
+    9.8415    3.1166    2.1986 C   0  0  0  0  0  0  0  0  0  0  0  0
+    4.5900    0.6529    1.1879 H   0  0  0  0  0  0  0  0  0  0  0  0
+    3.4727    2.7213    1.7678 H   0  0  0  0  0  0  0  0  0  0  0  0
+    3.1219    0.0488   -2.2404 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.9629    3.0843    1.2517 H   0  0  0  0  0  0  0  0  0  0  0  0
+    0.2037    1.7542    0.5583 H   0  0  0  0  0  0  0  0  0  0  0  0
+    5.9498    2.5599    1.4661 H   0  0  0  0  0  0  0  0  0  0  0  0
+    6.2313    2.8639   -1.4567 H   0  0  0  0  0  0  0  0  0  0  0  0
+    6.7520    3.9676   -0.1510 H   0  0  0  0  0  0  0  0  0  0  0  0
+    4.7107    4.9615   -1.2044 H   0  0  0  0  0  0  0  0  0  0  0  0
+    7.0578    0.7449   -0.5670 H   0  0  0  0  0  0  0  0  0  0  0  0
+    6.9126    0.4025    1.1696 H   0  0  0  0  0  0  0  0  0  0  0  0
+    9.3276    1.2745   -1.1856 H   0  0  0  0  0  0  0  0  0  0  0  0
+   11.4821    2.3607   -0.6818 H   0  0  0  0  0  0  0  0  0  0  0  0
+   11.8273    3.5350    1.4718 H   0  0  0  0  0  0  0  0  0  0  0  0
+    9.9871    3.6278    3.1462 H   0  0  0  0  0  0  0  0  0  0  0  0
+  1  2  1  0  0  0  0
+  2  3  1  1  0  0  0
+  2 20  1  0  0  0  0
+  3  4  1  0  0  0  0
+  3 11  1  0  0  0  0
+  3 21  1  1  0  0  0
+  4  5  2  0  0  0  0
+  4  7  1  0  0  0  0
+  5  6  1  0  0  0  0
+  6  1  2  0  0  0  0
+  6 22  1  0  0  0  0
+  7 23  1  0  0  0  0
+  7 24  1  0  0  0  0
+  8  2  1  6  0  0  0
+  8 25  1  0  0  0  0
+  9  8  1  0  0  0  0
+  9 10  1  0  0  0  0
+  9 26  1  0  0  0  0
+  9 27  1  0  0  0  0
+ 10 28  1  0  0  0  0
+ 11 10  2  0  0  0  0
+ 12  8  1  0  0  0  0
+ 12 13  1  0  0  0  0
+ 12 29  1  0  0  0  0
+ 12 30  1  0  0  0  0
+ 13 16  1  0  0  0  0
+ 13 14  2  0  0  0  0
+ 14 15  1  0  0  0  0
+ 14 19  1  0  0  0  0
+ 16 31  1  0  0  0  0
+ 17 16  2  0  0  0  0
+ 17 32  1  0  0  0  0
+ 18 17  1  0  0  0  0
+ 18 33  1  0  0  0  0
+ 19 18  2  0  0  0  0
+ 19 34  1  0  0  0  0
+M  CHG  2   4   1   8   1
+M  END
+</script>
+	<script>
+		var chemViewer;
+		function init()
+		{
+			chemViewer = Kekule.Widget.getWidgetById('chemViewer');
+			// adjust size
+			adjustSize();
+
+			window.onresize = adjustSize;
+
+			Kekule.Widget.getWidgetById('btnOpenBabel').addEventListener('execute', function(e){
+				Kekule.IO.enableOpenBabelFormats();
+			});
+		}
+		function adjustSize()
+		{
+			var dim = Kekule.HtmlElementUtils.getViewportDimension(document);
+			var headerDim = Kekule.HtmlElementUtils.getElemClientDimension(document.getElementById('header'));
+			chemViewer.setWidth(dim.width - 10 + 'px').setHeight(dim.height - 10 - headerDim.height + 'px');
+		}
+
+		Kekule.X.domReady(init);
+	</script>
+</head>
+<body>
+	<div id="chemViewer" style="width:1000px;height:650px"
+			 data-widget="Kekule.ChemWidget.Viewer3D" data-enable-toolbar="true" data-auto-size="false" data-padding="20"
+			 data-toolbar-evoke-modes="[0]"
+			 data-chem-obj="url(#mol1)"></div>
+	<div id="header">
+		<button id="btnOpenBabel" data-widget="Kekule.Widget.Button">Enable OpenBabel Formats</button>
+		<span>Click this button to load OpenBabel library to support more chemical data formats. Check the load or save button in viewer to see the changes.</span>
+	</div>
+</body>
+</html>
